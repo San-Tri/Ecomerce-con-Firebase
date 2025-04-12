@@ -37,16 +37,16 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
         } else {
           toast({
             title: "Error",
-            description: "Product not found",
+            description: "Producto no encontrado",
             variant: "destructive"
           })
           router.push("/admin")
         }
       } catch (error) {
-        console.error("Error fetching product:", error)
+        console.error("Error al cargar el producto:", error)
         toast({
           title: "Error",
-          description: "Failed to fetch product",
+          description: "No se pudo cargar el producto",
           variant: "destructive"
         })
       } finally {
@@ -74,15 +74,15 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
       })
 
       toast({
-        title: "Success",
-        description: "Product updated successfully"
+        title: "Éxito",
+        description: "Producto actualizado correctamente"
       })
       router.push("/admin")
     } catch (error) {
-      console.error("Error updating product:", error)
+      console.error("Error al actualizar el producto:", error)
       toast({
         title: "Error",
-        description: "Failed to update product",
+        description: "No se pudo actualizar el producto",
         variant: "destructive"
       })
     } finally {
@@ -106,15 +106,15 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
     <div className="container mx-auto py-8">
       <Card>
         <CardHeader>
-          <CardTitle>Edit Product</CardTitle>
+          <CardTitle>Editar Producto</CardTitle>
           <CardDescription>
-            Update the product details below
+            Actualiza los detalles del producto a continuación
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">Nombre</Label>
               <Input
                 id="name"
                 value={product.name}
@@ -123,7 +123,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Descripción</Label>
               <Textarea
                 id="description"
                 value={product.description}
@@ -132,7 +132,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="price">Price</Label>
+              <Label htmlFor="price">Precio</Label>
               <Input
                 id="price"
                 type="number"
@@ -144,7 +144,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="category">Category</Label>
+              <Label htmlFor="category">Categoría</Label>
               <Input
                 id="category"
                 value={product.category}
@@ -164,7 +164,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="imageUrl">Image URL</Label>
+              <Label htmlFor="imageUrl">URL de la Imagen</Label>
               <Input
                 id="imageUrl"
                 value={product.imageUrl}
@@ -177,11 +177,11 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                 type="button"
                 onClick={() => router.push("/admin")}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button type="submit" disabled={saving}>
                 {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Save Changes
+                Guardar Cambios
               </Button>
             </div>
           </form>

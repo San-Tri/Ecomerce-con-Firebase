@@ -1,6 +1,21 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { collection, getDocs, query, orderBy } from "firebase/firestore"
+import { db } from "@/lib/firebase"
+import type { Product } from "@/lib/types"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, Search, ChevronRight } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from "@/components/ui/use-toast"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Package, ShoppingCart, DollarSign, MoreHorizontal, Plus, Pencil, Trash, Users, TrendingUp, AlertCircle, Search, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import Image from "next/image"
 import Navbar from "@/components/navbar"
 import FeaturedProducts from "@/components/featured-products"
 import CategorySection from "@/components/category-section"
@@ -11,23 +26,23 @@ export default function Home() {
       <Navbar />
 
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* Sección Hero */}
         <section className="bg-yellow-400 py-12 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Everything you need, delivered to your door</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Todo lo que necesitas, entregado en tu puerta</h1>
               <p className="text-lg md:text-xl mb-8">
-                Shop millions of products with fast shipping and secure payments
+                Compra millones de productos con envío rápido y pagos seguros
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+                <Button asChild className="bg-blue-600 hover:bg-blue-700">
                   <Link href="/products">
-                    Shop Now <ShoppingCart className="ml-2 h-5 w-5" />
+                    Comprar Ahora <ShoppingCart className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild className="border">
                   <Link href="/auth/register">
-                    Create Account <ChevronRight className="ml-2 h-5 w-5" />
+                    Crear Cuenta <ChevronRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
               </div>
@@ -35,47 +50,47 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Products */}
+        {/* Productos Destacados */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-6">Featured Products</h2>
+            <h2 className="text-2xl font-bold mb-6">Productos Destacados</h2>
             <FeaturedProducts />
           </div>
         </section>
 
-        {/* Categories */}
+        {/* Categorías */}
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-6">Shop by Category</h2>
+            <h2 className="text-2xl font-bold mb-6">Comprar por Categoría</h2>
             <CategorySection />
           </div>
         </section>
 
-        {/* Benefits */}
+        {/* Beneficios */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-8 text-center">Why Shop With Us</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">¿Por qué comprar con nosotros?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <ShoppingCart className="h-8 w-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Free Shipping</h3>
-                <p className="text-gray-600">On orders over $50</p>
+                <h3 className="text-xl font-semibold mb-2">Envío Gratis</h3>
+                <p className="text-gray-600">En pedidos superiores a $50</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="h-8 w-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Easy Returns</h3>
-                <p className="text-gray-600">30-day return policy</p>
+                <h3 className="text-xl font-semibold mb-2">Devoluciones Fáciles</h3>
+                <p className="text-gray-600">Política de devolución de 30 días</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md text-center">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <ShoppingCart className="h-8 w-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Secure Payments</h3>
-                <p className="text-gray-600">Protected by industry standards</p>
+                <h3 className="text-xl font-semibold mb-2">Pagos Seguros</h3>
+                <p className="text-gray-600">Protegido por estándares de la industria</p>
               </div>
             </div>
           </div>
@@ -86,67 +101,67 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">About Us</h3>
+              <h3 className="text-lg font-semibold mb-4">Sobre Nosotros</h3>
               <ul className="space-y-2">
                 <li>
                   <Link href="#" className="hover:underline">
-                    Company
+                    Empresa
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Careers
+                    Carreras
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Press
+                    Prensa
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
+              <h3 className="text-lg font-semibold mb-4">Servicio al Cliente</h3>
               <ul className="space-y-2">
                 <li>
                   <Link href="#" className="hover:underline">
-                    Help Center
+                    Centro de Ayuda
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Returns
+                    Devoluciones
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Contact Us
+                    Contáctanos
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Policies</h3>
+              <h3 className="text-lg font-semibold mb-4">Políticas</h3>
               <ul className="space-y-2">
                 <li>
                   <Link href="#" className="hover:underline">
-                    Privacy Policy
+                    Política de Privacidad
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Terms of Service
+                    Términos de Servicio
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:underline">
-                    Shipping Policy
+                    Política de Envío
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
+              <h3 className="text-lg font-semibold mb-4">Conéctate con Nosotros</h3>
               <div className="flex space-x-4">
                 <Link href="#" className="hover:text-blue-300">
                   <span className="sr-only">Facebook</span>
@@ -178,7 +193,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-blue-800 text-center">
-            <p>&copy; 2024 MercadoClone. All rights reserved.</p>
+            <p>&copy; 2024 MercadoClone. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>

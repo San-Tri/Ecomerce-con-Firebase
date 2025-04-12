@@ -114,14 +114,14 @@ export default function AdminDashboard() {
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-4">
           <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-            ← Back to Home
+            ← Volver al Inicio
           </Link>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold">Panel de Administración</h1>
         </div>
         <Link href="/admin/products/new">
           <Button>
             <Plus className="mr-2 h-4 w-4" />
-            Add Product
+            Agregar Producto
           </Button>
         </Link>
       </div>
@@ -129,43 +129,43 @@ export default function AdminDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">Ingresos Totales</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${totalRevenue.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">
-              +20.1% from last month
+              +20.1% desde el mes pasado
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
+            <CardTitle className="text-sm font-medium">Pedidos Totales</CardTitle>
             <ShoppingCart className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{orders.length}</div>
             <p className="text-xs text-muted-foreground">
-              +180.1% from last month
+              +180.1% desde el mes pasado
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Products</CardTitle>
+            <CardTitle className="text-sm font-medium">Productos</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{products.length}</div>
             <p className="text-xs text-muted-foreground">
-              +12% from last month
+              +12% desde el mes pasado
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Order Completion</CardTitle>
+            <CardTitle className="text-sm font-medium">Tasa de Completitud</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -177,8 +177,8 @@ export default function AdminDashboard() {
 
       <Tabs defaultValue="products" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="products">Products</TabsTrigger>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
+          <TabsTrigger value="products">Productos</TabsTrigger>
+          <TabsTrigger value="orders">Pedidos</TabsTrigger>
         </TabsList>
         <TabsContent value="products" className="space-y-4">
           <div className="flex items-center gap-4">
@@ -186,7 +186,7 @@ export default function AdminDashboard() {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder="Buscar productos..."
                 className="pl-8"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -195,21 +195,21 @@ export default function AdminDashboard() {
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Products</CardTitle>
+              <CardTitle>Productos</CardTitle>
               <CardDescription>
-                Manage your products and inventory
+                Administra tus productos e inventario
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Product</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Price</TableHead>
+                    <TableHead>Producto</TableHead>
+                    <TableHead>Categoría</TableHead>
+                    <TableHead>Precio</TableHead>
                     <TableHead>Stock</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>Estado</TableHead>
+                    <TableHead className="text-right">Acciones</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -238,7 +238,7 @@ export default function AdminDashboard() {
                       <TableCell>{product.stock}</TableCell>
                       <TableCell>
                         <Badge className={product.stock > 0 ? "bg-green-500" : "bg-red-500"}>
-                          {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                          {product.stock > 0 ? "En Stock" : "Sin Stock"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -252,14 +252,14 @@ export default function AdminDashboard() {
                             <DropdownMenuItem asChild>
                               <Link href={`/admin/products/${product.id}/edit`}>
                                 <Pencil className="mr-2 h-4 w-4" />
-                                Edit
+                                Editar
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => setSelectedProduct(product)}
                             >
                               <Trash className="mr-2 h-4 w-4" />
-                              Delete
+                              Eliminar
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -274,21 +274,21 @@ export default function AdminDashboard() {
         <TabsContent value="orders" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Orders</CardTitle>
+              <CardTitle>Pedidos</CardTitle>
               <CardDescription>
-                View and manage customer orders
+                Ver y administrar pedidos de clientes
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Order ID</TableHead>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Date</TableHead>
+                    <TableHead>ID del Pedido</TableHead>
+                    <TableHead>Cliente</TableHead>
+                    <TableHead>Fecha</TableHead>
                     <TableHead>Total</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>Estado</TableHead>
+                    <TableHead className="text-right">Acciones</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -308,12 +308,14 @@ export default function AdminDashboard() {
                             ? "bg-yellow-500" 
                             : "bg-red-500"
                         }>
-                          {order.status}
+                          {order.status === "delivered" ? "Entregado" : 
+                           order.status === "pending" ? "Pendiente" : 
+                           "Cancelado"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
                         <Button className="h-8 px-2">
-                          View Details
+                          Ver Detalles
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -328,16 +330,16 @@ export default function AdminDashboard() {
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Product</DialogTitle>
+            <DialogTitle>Eliminar Producto</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this product? This action cannot be undone.
+              ¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button
               onClick={() => setSelectedProduct(null)}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               className="bg-red-500 hover:bg-red-600"
@@ -348,7 +350,7 @@ export default function AdminDashboard() {
                 }
               }}
             >
-              Delete
+              Eliminar
             </Button>
           </DialogFooter>
         </DialogContent>
